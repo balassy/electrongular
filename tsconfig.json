@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitHelpers": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "preserveConstEnums": true,
+    "pretty": true,
+    "strict": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es2015"
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2
+  },
+  "exclude": [
+    "node_modules",
+    "out"
+  ]
+}

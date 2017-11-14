@@ -1,0 +1,49 @@
+{
+  "env": {
+    "development": {
+      "text/typescript": {
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "inlineSources": true,
+        "inlineSourceMap": true,
+        "module": "commonjs",
+        "noEmitHelpers": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "preserveConstEnums": true,
+        "removeComments": false,
+        "strict": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es2015"
+      }
+    },
+    "production": {
+      "text/typescript": {
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "module": "commonjs",
+        "noEmitHelpers": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "preserveConstEnums": true,
+        "removeComments": false,
+        "strict": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "sourceMap": false,
+        "target": "es2015"
+      }
+    }
+  }
+}
