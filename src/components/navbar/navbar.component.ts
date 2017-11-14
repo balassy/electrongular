@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { remote } from 'electron';
+import { Component, Inject } from '@angular/core';
+
+import { WindowService } from '../../services/window/window.service';
+import { MessageBoxOptions } from '../../services/window/window.types';
 
 @Component({
   selector: 'app-navbar',
@@ -7,20 +9,21 @@ import { remote } from 'electron';
   styleUrls: ['./components/navbar/navbar.component.css']
 })
 export class NavbarComponent {
+  public constructor(@Inject(WindowService) private _windowService: WindowService) {
+  }
+
   public onCloseButtonClicked(): void {
-    const currentWindow: Electron.BrowserWindow = remote.BrowserWindow.getFocusedWindow();    
-    
-    const options: Electron.MessageBoxOptions = {
+    const opts: MessageBoxOptions = {
       title: 'Exit',
       type: 'warning',
-      buttons: [ 'OK', 'Cancel' ],
-      message: 'Are you sure you want to exit the application?'
+      buttons: ['OK', 'Cancel'],
+      message: 'Are you really you want to exit the application?'
     };
 
-    remote.dialog.showMessageBox(currentWindow, options, (response: number) => {
-      if (response === 0) {
-        currentWindow.close();
+    this._windowService.showMessageBox(opts, (selectedButtonIndex: number) => {
+      if (selectedButtonIndex === 0) {
+        this._windowService.closeCurrentWindow();
       }
-    });
+    })
   }
 }

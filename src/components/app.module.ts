@@ -5,6 +5,8 @@ import { AppThemeModule } from './app-theme.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
+import { WindowService } from '../services/window/window.service';
+
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
@@ -14,6 +16,9 @@ import { NavbarComponent } from './navbar/navbar.component';
   imports: [
     AppThemeModule,
     BrowserModule
+  ],
+  providers: [
+    WindowService
   ]
 })
 export class AppModule { }
