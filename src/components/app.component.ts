@@ -10,6 +10,5 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.name = 'Electrongular';
-    console.log('AppComponent initialized');
   }
 }

@@ -12,8 +12,9 @@
     "no-inferrable-types": false,
     "no-object-literal-type-assertion": false,
     "no-parameter-properties": false,
-    "no-void-expression": false,
+    "no-unsafe-any": false,                               // Triggers false alarms with Angular annotations.
     "no-use-before-declare": false,
+    "no-void-expression": false,
     "only-arrow-functions": false,
     "prefer-template": [true, "allow-single-concat"],
     "promise-function-async": false,

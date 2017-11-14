@@ -24,6 +24,6 @@ export class NavbarComponent {
       if (selectedButtonIndex === 0) {
         this._windowService.closeCurrentWindow();
       }
-    })
+    });
   }
 }

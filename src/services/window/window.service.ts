@@ -5,8 +5,7 @@ import { MessageBoxOptions } from './window.types';
 @Injectable()
 export class WindowService {
   public closeCurrentWindow(): void {
-    const currentWindow: Electron.BrowserWindow = remote.BrowserWindow.getFocusedWindow();    
-    currentWindow.close();
+    this._getCurrentWindow().close();
   }
 
   public showMessageBox(options: MessageBoxOptions, callback: (selectedButtonIndex: number) => void): void {
@@ -17,8 +16,13 @@ export class WindowService {
       message: options.message
     };
 
-    const currentWindow: Electron.BrowserWindow = remote.BrowserWindow.getFocusedWindow();    
+    const currentWindow: Electron.BrowserWindow = this._getCurrentWindow();
 
     remote.dialog.showMessageBox(currentWindow, opts, callback);
+  }
+
+  // tslint:disable-next-line prefer-function-over-method
+  private _getCurrentWindow(): Electron.BrowserWindow {
+    return remote.BrowserWindow.getFocusedWindow();
   }
 }
