@@ -15,8 +15,8 @@ const createWindow: () => void = (): void => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     frame: false,
-    height: 600,
-    width: 800
+    height: 768,
+    width: 1024
   });
 
   // Load the index.html of the app.
