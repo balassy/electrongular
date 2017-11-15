@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { WindowService } from '../../../services/window/window.service';
 import { MessageBoxOptions } from '../../../services/window/window.types';
@@ -10,8 +9,7 @@ import { MessageBoxOptions } from '../../../services/window/window.types';
   styleUrls: ['./components/shared/navbar/navbar.component.css']
 })
 export class NavbarComponent {
-  public constructor(@Inject(WindowService) private _windowService: WindowService,
-                     @Inject(Router) private _router: Router) {
+  public constructor(@Inject(WindowService) private _windowService: WindowService) {
   }
 
   public onCloseButtonClicked(): void {
@@ -27,9 +25,5 @@ export class NavbarComponent {
         this._windowService.closeCurrentWindow();
       }
     });
-  }
-
-  public onSettingsButtonClicked(): Promise<boolean> {
-    return this._router.navigate(['/settings']);
   }
 }

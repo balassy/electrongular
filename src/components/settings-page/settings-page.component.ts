@@ -10,10 +10,6 @@ export class SettingsPageComponent {
   public constructor(@Inject(Router) private _router: Router) {
   }
 
-  public onCancelButtonClicked(): Promise<boolean> {
-    return this._navigateToHome();
-  }
-
   public onSaveButtonClicked(): Promise<boolean> {
     return this._navigateToHome();
   }
