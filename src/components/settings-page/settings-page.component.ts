@@ -1,4 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,10 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./components/settings-page/settings-page.component.css']
 })
 export class SettingsPageComponent {
-  public constructor(@Inject(Router) private _router: Router) {
+  public constructor(private _router: Router,
+                     private _snackBar: MatSnackBar) {
   }
 
   public onSaveButtonClicked(): Promise<boolean> {
+    this._snackBar.open('Settings saved successfully.', 'Dismiss', { duration: 5000 });
     return this._navigateToHome();
   }
 
