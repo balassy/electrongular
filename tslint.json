@@ -12,6 +12,7 @@
     "no-inferrable-types": false,
     "no-object-literal-type-assertion": false,
     "no-parameter-properties": false,
+    "no-submodule-imports": [true, "rxjs", "@angular/platform-browser", "@angular/core/testing"],
     "no-unsafe-any": false,                               // Triggers false alarms with Angular annotations.
     "no-use-before-declare": false,
     "no-void-expression": false,
