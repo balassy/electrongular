@@ -1,6 +1,17 @@
 <h1>Settings</h1>
 
-<button mat-raised-button color="primary"
-        matTooltip="Saving to..."
-        (click)="onSaveButtonClicked()">Save</button>
-<button mat-button  [routerLink]="['']">Cancel</button>
+<form #form="ngForm" (ngSubmit)="onSaveButtonClicked()" class="form-container">
+  <div>
+    <mat-form-field class="projects-folder-path-field">
+      <input type="text" matInput placeholder="Projects folder" name="projectsFolderPath" [(ngModel)]="appSettings.projectsFolderPath">
+    </mat-form-field>
+    <button type="button" mat-button (click)="onSelectFolderButtonClicked()">Select folder...</button>
+  </div>
+
+  <div>
+    <button type="submit" mat-raised-button color="primary"
+            matTooltip="Saving to {{ settingsPath }}"
+            matTooltipPosition="right">Save</button>
+    <button type="button" mat-button [routerLink]="['']">Cancel</button>
+  </div>
+</div>
