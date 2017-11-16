@@ -36,8 +36,8 @@ export class SettingsPageComponent implements OnInit {
 
   public onSelectFolderButtonClicked(): void {
     const options: OpenFolderDialogOptions = {
-      defaultPath: this.appSettings.projectsFolderPath;
-    }
+      defaultPath: this.appSettings.projectsFolderPath
+    };
 
     this._windowService.showOpenFolderDialog(options, (selectedFolderPath: string | undefined) => {
       if (selectedFolderPath) {

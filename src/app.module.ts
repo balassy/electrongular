@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // tslint:disable-line ordered-imports (Must come after BrowserModule.)
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppThemeModule } from './app-theme.module';
