@@ -8,10 +8,12 @@ import { AppThemeModule } from './app-theme.module';
 
 import { AppComponent } from './components/app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { ProjectListComponent } from './components/home-page/project-list/project-list.component';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 
+import { FolderService } from './services/folder/folder.service';
 import { SettingsService } from './services/settings/settings.service';
 import { WindowService } from './services/window/window.service';
 
@@ -21,6 +23,7 @@ import { WindowService } from './services/window/window.service';
     AppComponent,
     HomePageComponent,
     NavbarComponent,
+    ProjectListComponent,
     SettingsPageComponent
   ],
   imports: [
@@ -31,6 +34,7 @@ import { WindowService } from './services/window/window.service';
     FormsModule
   ],
   providers: [
+    FolderService,
     SettingsService,
     WindowService
   ]
