@@ -1,5 +1,1 @@
-<ul>
-  <li *ngFor="let path of paths">
-    <span>{{ path }}</span>
-  </li>
-</ul>
+<app-project-item *ngFor="let path of paths" [path]="path"></app-project-item>
