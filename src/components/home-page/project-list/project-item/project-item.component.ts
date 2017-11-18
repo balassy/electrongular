@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { basename } from 'path';
 
+import { GitService } from '../../../../services/git/git.service';
 import { ProjectService } from '../../../../services/project/project.service';
 import { ProjectInfo } from '../../../../services/project/project.types';
 
@@ -10,6 +11,8 @@ import { ProjectInfo } from '../../../../services/project/project.types';
   styleUrls: ['./components/home-page/project-list/project-item/project-item.component.css']
 })
 export class ProjectItemComponent implements OnInit {
+  public currentBranch: string;
+
   public description: string;
 
   @Input()
@@ -19,7 +22,8 @@ export class ProjectItemComponent implements OnInit {
 
   public version: string;
 
-  public constructor(private _projectService: ProjectService) {
+  public constructor(private _projectService: ProjectService,
+                     private _gitService: GitService) {
   }
 
   public ngOnInit(): void {
@@ -31,11 +35,15 @@ export class ProjectItemComponent implements OnInit {
 
     if (projectInfo) {
       this.title = `${projectInfo.name} @ ${projectInfo.version}`;
-      this.description = projectInfo.description;
+      this.description = projectInfo.description || '(The package has no description.)';
       this.version = projectInfo.version;
     } else {
       this.title = basename(this.path);
+      this.description = '(There is no package.json file in this folder.)';
     }
+
+    const currentBranch: string | null = this._gitService.getCurrentBranchName(this.path);
+    this.currentBranch = currentBranch || '(unknown)';
   }
 
   public onFolderIconClicked(): void {
