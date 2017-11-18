@@ -15,6 +15,7 @@ import { SettingsPageComponent } from './components/settings-page/settings-page.
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 
 import { FolderService } from './services/folder/folder.service';
+import { ProjectService } from './services/project/project.service';
 import { SettingsService } from './services/settings/settings.service';
 import { WindowService } from './services/window/window.service';
 
@@ -37,6 +38,7 @@ import { WindowService } from './services/window/window.service';
   ],
   providers: [
     FolderService,
+    ProjectService,
     SettingsService,
     WindowService
   ]

@@ -9,3 +9,8 @@
 .header-image {
   background-size: cover;
 }
+
+.project-item-title {
+  font-weight: 500;
+  font-size: 16px;
+}
