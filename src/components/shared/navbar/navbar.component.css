@@ -1,3 +1,9 @@
+.app-navbar {
+  flex: 0 0 auto;
+  -webkit-app-region: drag;
+  z-index: 10;
+}
+
 .fill-remaining-space {
   flex: 1 1 auto;
 }
