@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { basename } from 'path';
 
 import { GitService } from '../../../../services/git/git.service';
+import { CommitInfo } from '../../../../services/git/git.types';
 import { ProjectService } from '../../../../services/project/project.service';
 import { ProjectInfo } from '../../../../services/project/project.types';
 
@@ -15,6 +16,8 @@ export class ProjectItemComponent implements OnInit {
 
   public description: string;
 
+  public lastCommit: CommitInfo;
+
   @Input()
   public path: string;
 
@@ -26,7 +29,7 @@ export class ProjectItemComponent implements OnInit {
                      private _gitService: GitService) {
   }
 
-  public ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
     if (!this.path) {
       throw new Error('Please specify the path for the project item!');
     }
@@ -44,9 +47,18 @@ export class ProjectItemComponent implements OnInit {
 
     const currentBranch: string | null = this._gitService.getCurrentBranchName(this.path);
     this.currentBranch = currentBranch || '(unknown)';
+
+    await this._getLastCommit();
   }
 
   public onFolderIconClicked(): void {
     this._projectService.openProjectFolder(this.path);
+  }
+
+  private async _getLastCommit(): Promise<void> {
+    const lastCommit: CommitInfo | undefined = await this._gitService.getLastCommit(this.path);
+    if (!!lastCommit) {
+      this.lastCommit = lastCommit;
+    }
   }
 }

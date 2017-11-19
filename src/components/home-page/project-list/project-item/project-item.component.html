@@ -1,18 +1,33 @@
 <mat-card class="project-item">
   <mat-card-header>
-      <div mat-card-avatar class="header-image">
-        <button mat-mini-fab color="primary"
-          matTooltip="{{ path }}"
-          matTooltipPosition="right"
-          (click)="onFolderIconClicked()">
-          <mat-icon>folder</mat-icon>
-        </button>
-      </div>
-      <mat-card-title class="project-item-title">{{ title }}</mat-card-title>
-      <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+    <div mat-card-avatar class="header-image">
+      <button mat-mini-fab color="primary" matTooltip="{{ path }}" matTooltipPosition="right" (click)="onFolderIconClicked()">
+        <mat-icon>folder</mat-icon>
+      </button>
+    </div>
+    <mat-card-title class="project-item-title">{{ title }}</mat-card-title>
+    <mat-card-subtitle>{{ description }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    Current branch: <strong>{{ currentBranch }}</strong>
+    <table>
+      <tr>
+        <td class="property-header">Current branch:</td>
+        <td>
+          <strong>{{ currentBranch }}</strong>
+        </td>
+      </tr>
+
+      <tr *ngIf="!!lastCommit">
+        <td class="property-header">Last commit:</td>
+        <td>
+          <strong>
+            {{ lastCommit.relativeDate }} ({{ lastCommit.date }}) <br />
+          </strong>
+          {{ lastCommit.message }} <br />
+          {{ lastCommit.commiterName }} ({{ lastCommit.commiterEmail }})
+        </td>
+      </tr>
+    </table>
   </mat-card-content>
 </mat-card>
