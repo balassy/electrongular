@@ -30,6 +30,25 @@ export class ProjectItemComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
+    await this._loadProject();
+  }
+
+  public onFolderIconClicked(): void {
+    this._projectService.openProjectFolder(this.path);
+  }
+
+  public async onRefreshButtonClicked(): Promise<void> {
+    await this._loadProject();
+  }
+
+  private async _getLastCommit(): Promise<void> {
+    const lastCommit: CommitInfo | undefined = await this._gitService.getLastCommit(this.path);
+    if (!!lastCommit) {
+      this.lastCommit = lastCommit;
+    }
+  }
+
+  private async _loadProject(): Promise<void> {
     if (!this.path) {
       throw new Error('Please specify the path for the project item!');
     }
@@ -49,16 +68,5 @@ export class ProjectItemComponent implements OnInit {
     this.currentBranch = currentBranch || '(unknown)';
 
     await this._getLastCommit();
-  }
-
-  public onFolderIconClicked(): void {
-    this._projectService.openProjectFolder(this.path);
-  }
-
-  private async _getLastCommit(): Promise<void> {
-    const lastCommit: CommitInfo | undefined = await this._gitService.getLastCommit(this.path);
-    if (!!lastCommit) {
-      this.lastCommit = lastCommit;
-    }
   }
 }
