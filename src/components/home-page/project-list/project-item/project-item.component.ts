@@ -21,6 +21,8 @@ export class ProjectItemComponent implements OnInit {
   @Input()
   public path: string;
 
+  public remoteBranchNames: string[];
+
   public title: string;
 
   public version: string;
@@ -44,6 +46,11 @@ export class ProjectItemComponent implements OnInit {
 
   public async onRefreshButtonClicked(): Promise<void> {
     await this._loadProject();
+  }
+
+  public async onSwitchBranchButtonClicked(): Promise<void> {
+    await this._gitService.fetch(this.path);
+    this.remoteBranchNames = await this._gitService.getRemoteBranches(this.path);
   }
 
   private async _getLastCommit(): Promise<void> {

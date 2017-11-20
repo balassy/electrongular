@@ -4,12 +4,16 @@ import { join } from 'path';
 import simpleGit = require('simple-git/promise');
 
 import { CommitInfo } from './git.types';
-import { ListLogLine, ListLogSummary } from './simple-git.types';
+import { BranchSummary, ListLogLine, ListLogSummary } from './simple-git.types';
 
 // tslint:disable prefer-function-over-method (Instantiated by DI.)
 
 @Injectable()
 export class GitService {
+  public async fetch(folderPath: string): Promise<void> {
+    await simpleGit(folderPath).fetch();
+  }
+
   // TODO: Async https://raw.githubusercontent.com/jonschlinkert/git-branch/master/index.js
   public getCurrentBranchName(folderPath: string): string | null {
     const headFilePath: string = this._gitHeadpath(folderPath);
@@ -38,6 +42,11 @@ export class GitService {
       // Can happen if there are no commits on the current branch yet.
       return undefined;
     }
+  }
+
+  public async getRemoteBranches(folderPath: string): Promise<string[]> {
+    const branches: BranchSummary = await simpleGit(folderPath).branch(['-v', '-r']);
+    return branches.all.map((branchName: string) => branchName.substring('origin/'.length));
   }
 
   public async pull(folderPath: string): Promise<void> {
