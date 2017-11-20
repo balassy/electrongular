@@ -37,6 +37,11 @@ export class ProjectItemComponent implements OnInit {
     this._projectService.openProjectFolder(this.path);
   }
 
+  public async onGetLatestButtonClicked(): Promise<void> {
+    await this._gitService.pull(this.path);
+    await this._loadProject();
+  }
+
   public async onRefreshButtonClicked(): Promise<void> {
     await this._loadProject();
   }

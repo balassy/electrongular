@@ -40,6 +40,10 @@ export class GitService {
     }
   }
 
+  public async pull(folderPath: string): Promise<void> {
+    await simpleGit(folderPath).pull();
+  }
+
   private _gitHeadpath(folderPath: string): string {
     return join(folderPath, '.git/HEAD');
   }
