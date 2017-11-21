@@ -52,21 +52,32 @@ export class ProjectItemComponent implements OnInit {
   }
 
   public async onSwitchBranchButtonClicked(): Promise<void> {
+    await this._gitService.fetch(this.path);
     const remoteBranchNames: string[] = await this._gitService.getRemoteBranches(this.path);
 
     const dialogRef: MatDialogRef<SwitchBranchDialog> = this._dialog.open(SwitchBranchDialog, {
       width: '500px',
       data: <DialogParams> {
         currentBranchName: this.currentBranch,
-        remoteBranchNames: remoteBranchNames
+        remoteBranchNames
       }
     });
 
-    dialogRef.afterClosed().subscribe((result: DialogResult) => {
-      console.log('result', result);
-    });
+    dialogRef.afterClosed().subscribe(async (result: DialogResult) => {
+      if (result) {
+        if (!result.selectedBranchName) {
+          throw new Error('Please select a branch!');
+        }
 
-    // await this._gitService.fetch(this.path);
+        await this._gitService.checkoutBranch(this.path, result.selectedBranchName);
+
+        if (result.getLatest) {
+          await this._gitService.pull(this.path);
+        }
+
+        await this._loadProject();
+      }
+    });
   }
 
   private async _getLastCommit(): Promise<void> {

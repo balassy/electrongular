@@ -10,6 +10,11 @@ import { BranchSummary, ListLogLine, ListLogSummary } from './simple-git.types';
 
 @Injectable()
 export class GitService {
+  public async checkoutBranch(folderPath: string, branchName: string): Promise<void>  {
+    const remoteBranchName: string = `origin/${branchName}`;
+    await simpleGit(folderPath).checkout(['-B', branchName, remoteBranchName]);
+  }
+
   public async fetch(folderPath: string): Promise<void> {
     await simpleGit(folderPath).fetch();
   }
