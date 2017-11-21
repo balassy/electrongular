@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Switch branch</h1>
+
+<div mat-dialog-content>
+  <p>
+    Select the branch to switch to:
+  </p>
+  <mat-form-field class="form-field">
+    <mat-select [(value)]="branchName">
+      <mat-option *ngFor="let remoteBranchName of remoteBranchNames" [value]="remoteBranchName">
+        <div *ngIf="remoteBranchName === currentBranchName; then currentBranch else otherBranch"></div>
+
+        <ng-template #currentBranch>
+          <strong>{{ remoteBranchName }} (current)</strong>
+        </ng-template>
+
+        <ng-template #otherBranch>
+          {{ remoteBranchName }}
+        </ng-template>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onSwitchAndGetLatestButtonClicked()">Switch and get latest</button>
+  <button mat-raised-button (click)="onSwitchButtonClicked()">Switch</button>
+  <button mat-button [mat-dialog-close]>Cancel</button>
+</div>

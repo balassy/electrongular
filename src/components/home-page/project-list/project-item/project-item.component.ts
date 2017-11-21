@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { basename } from 'path';
+
+import { SwitchBranchDialog } from './switch-branch-dialog/switch-branch-dialog.component';
+import { DialogParams, DialogResult } from './switch-branch-dialog/switch-branch-dialog.types';
 
 import { GitService } from '../../../../services/git/git.service';
 import { CommitInfo } from '../../../../services/git/git.types';
@@ -21,13 +25,12 @@ export class ProjectItemComponent implements OnInit {
   @Input()
   public path: string;
 
-  public remoteBranchNames: string[];
-
   public title: string;
 
   public version: string;
 
-  public constructor(private _projectService: ProjectService,
+  public constructor(private _dialog: MatDialog,
+                     private _projectService: ProjectService,
                      private _gitService: GitService) {
   }
 
@@ -49,8 +52,21 @@ export class ProjectItemComponent implements OnInit {
   }
 
   public async onSwitchBranchButtonClicked(): Promise<void> {
-    await this._gitService.fetch(this.path);
-    this.remoteBranchNames = await this._gitService.getRemoteBranches(this.path);
+    const remoteBranchNames: string[] = await this._gitService.getRemoteBranches(this.path);
+
+    const dialogRef: MatDialogRef<SwitchBranchDialog> = this._dialog.open(SwitchBranchDialog, {
+      width: '500px',
+      data: <DialogParams> {
+        currentBranchName: this.currentBranch,
+        remoteBranchNames: remoteBranchNames
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogResult) => {
+      console.log('result', result);
+    });
+
+    // await this._gitService.fetch(this.path);
   }
 
   private async _getLastCommit(): Promise<void> {

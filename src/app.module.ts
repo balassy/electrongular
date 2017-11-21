@@ -9,6 +9,7 @@ import { AppThemeModule } from './app-theme.module';
 import { AppComponent } from './components/app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ProjectItemComponent } from './components/home-page/project-list/project-item/project-item.component';
+import { SwitchBranchDialog } from './components/home-page/project-list/project-item/switch-branch-dialog/switch-branch-dialog.component';
 import { ProjectListComponent } from './components/home-page/project-list/project-list.component';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 
@@ -28,7 +29,8 @@ import { WindowService } from './services/window/window.service';
     NavbarComponent,
     ProjectItemComponent,
     ProjectListComponent,
-    SettingsPageComponent
+    SettingsPageComponent,
+    SwitchBranchDialog
   ],
   imports: [
     AppRoutingModule,
@@ -43,6 +45,9 @@ import { WindowService } from './services/window/window.service';
     ProjectService,
     SettingsService,
     WindowService
+  ],
+  entryComponents: [
+    SwitchBranchDialog
   ]
 })
 export class AppModule { }

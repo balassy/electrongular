@@ -33,15 +33,5 @@
     <button type="button" mat-button (click)="onRefreshButtonClicked()">Refresh</button>
     <button type="button" mat-button (click)="onGetLatestButtonClicked()">Get latest</button>
     <button type="button" mat-button (click)="onSwitchBranchButtonClicked()">Switch branch...</button>
-    Available branches:
-    <select (change)="selectItem($event.target.value)">
-      <option *ngFor="let branchName of remoteBranchNames" value={{branchName}}>{{ branchName }}</option>
-    </select>
-
-    <mat-form-field>
-      <mat-select>
-        <mat-option *ngFor="let branchName of remoteBranchNames" [value]="branchName">{{ branchName }}</option>
-      </mat-select>
-    </mat-form-field>
   </mat-card-content>
 </mat-card>
