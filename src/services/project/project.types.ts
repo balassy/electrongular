@@ -6,8 +6,10 @@ export interface PackageJson {
 }
 
 export interface ProjectInfo {
+  color?: string;
   description: string;
-  name: string;
-  path: string;
-  version: string;
+  environment?: string;
+  icon?: string;
+  name?: string;
+  version?: string;
 }

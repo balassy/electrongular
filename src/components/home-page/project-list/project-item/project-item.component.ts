@@ -9,6 +9,7 @@ import { GitService } from '../../../../services/git/git.service';
 import { CommitInfo } from '../../../../services/git/git.types';
 import { ProjectService } from '../../../../services/project/project.service';
 import { ProjectInfo } from '../../../../services/project/project.types';
+import { GenericInfoProvider } from '../../../../services/project/providers/generic-info-provider';
 
 @Component({
   selector: 'app-project-item',
@@ -16,18 +17,19 @@ import { ProjectInfo } from '../../../../services/project/project.types';
   styleUrls: ['./components/home-page/project-list/project-item/project-item.component.css']
 })
 export class ProjectItemComponent implements OnInit {
-  public currentBranch: string;
-
-  public description: string;
-
-  public lastCommit: CommitInfo;
-
   @Input()
   public path: string;
 
-  public title: string;
-
-  public version: string;
+  public projectInfo: {
+    color?: string;
+    currentBranch?: string;
+    description?: string;
+    environment?: string;
+    icon?: string;
+    lastCommit?: CommitInfo;
+    title?: string;
+    version?: string;
+  };
 
   public constructor(private _dialog: MatDialog,
                      private _projectService: ProjectService,
@@ -58,7 +60,7 @@ export class ProjectItemComponent implements OnInit {
     const dialogRef: MatDialogRef<SwitchBranchDialog> = this._dialog.open(SwitchBranchDialog, {
       width: '500px',
       data: <DialogParams> {
-        currentBranchName: this.currentBranch,
+        currentBranchName: this.projectInfo.currentBranch,
         remoteBranchNames
       }
     });
@@ -83,7 +85,7 @@ export class ProjectItemComponent implements OnInit {
   private async _getLastCommit(): Promise<void> {
     const lastCommit: CommitInfo | undefined = await this._gitService.getLastCommit(this.path);
     if (!!lastCommit) {
-      this.lastCommit = lastCommit;
+      this.projectInfo.lastCommit = lastCommit;
     }
   }
 
@@ -92,19 +94,29 @@ export class ProjectItemComponent implements OnInit {
       throw new Error('Please specify the path for the project item!');
     }
 
-    const projectInfo: ProjectInfo | undefined = this._projectService.getProjectInfo(this.path);
+    const infoProvider: GenericInfoProvider = this._projectService.getInfoProvider(this.path);
+
+    const projectInfo: ProjectInfo | undefined = infoProvider.getBasicProperties();
 
     if (projectInfo) {
-      this.title = `${projectInfo.name} @ ${projectInfo.version}`;
-      this.description = projectInfo.description || '(The package has no description.)';
-      this.version = projectInfo.version;
+      this.projectInfo = {
+        color: projectInfo.color,
+        description: projectInfo.description,
+        environment: projectInfo.environment,
+        icon: projectInfo.icon,
+        title: projectInfo.version
+          ? `${projectInfo.name} @ ${projectInfo.version}`
+          : projectInfo.name,
+        version: projectInfo.version
+      };
     } else {
-      this.title = basename(this.path);
-      this.description = '(There is no package.json file in this folder.)';
+      this.projectInfo = {
+        title: basename(this.path),
+        description: '(There is no package.json file in this folder.)'
+      };
     }
 
-    const currentBranch: string | null = this._gitService.getCurrentBranchName(this.path);
-    this.currentBranch = currentBranch || '(unknown)';
+    this.projectInfo.currentBranch = this._gitService.getCurrentBranchName(this.path);
 
     await this._getLastCommit();
   }

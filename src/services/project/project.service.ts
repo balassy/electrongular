@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
 import { shell } from 'electron';
-import { existsSync } from 'fs';  // TODO: async!
-import { join } from 'path';
-import { PackageJson, ProjectInfo } from './project.types';
+import { basename } from 'path';
+import { GenericInfoProvider } from './providers/generic-info-provider';
+import { MaverickInfoProvider } from './providers/maverick-info-provider';
+import { ThundercatInfoProvider } from './providers/thundercat-info-provider';
 
 // tslint:disable prefer-function-over-method (Instantiated by DI.)
 
 @Injectable()
 export class ProjectService {
-  public getProjectInfo(path: string): ProjectInfo | undefined {
-    if (!path) {
-      throw new Error('Please specify the project path!');
+  public getInfoProvider(path: string): GenericInfoProvider {
+    switch (basename(path)) {
+      case 'maverick':
+        return new MaverickInfoProvider(path);
+      case 'thundercat':
+        return new ThundercatInfoProvider(path);
+      default:
+        return new GenericInfoProvider(path);
     }
-
-    const packageJsonPath: string = join(path, 'package.json');
-    if (!existsSync(packageJsonPath)) {
-      return undefined;
-    }
-
-    const packageJson: PackageJson = require(packageJsonPath);
-
-    return {
-      description: packageJson.description,
-      name: packageJson.name,
-      path,
-      version: packageJson.version
-    };
   }
 
   public openProjectFolder(path: string): void {

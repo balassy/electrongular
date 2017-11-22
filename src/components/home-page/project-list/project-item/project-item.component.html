@@ -1,12 +1,12 @@
 <mat-card class="project-item">
   <mat-card-header>
     <div mat-card-avatar class="header-image">
-      <button mat-mini-fab color="primary" matTooltip="{{ path }}" matTooltipPosition="right" (click)="onFolderIconClicked()">
-        <mat-icon>folder</mat-icon>
+      <button mat-mini-fab color="{{ projectInfo.color || 'primary' }}" matTooltip="{{ path }}" matTooltipPosition="right" (click)="onFolderIconClicked()">
+        <mat-icon>{{ projectInfo.icon || 'folder' }}</mat-icon>
       </button>
     </div>
-    <mat-card-title class="project-item-title">{{ title }}</mat-card-title>
-    <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+    <mat-card-title class="project-item-title">{{ projectInfo.title }}</mat-card-title>
+    <mat-card-subtitle>{{ projectInfo.description || '(This package has no description.)' }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
@@ -14,20 +14,29 @@
       <tr>
         <td class="property-header">Current branch:</td>
         <td>
-          <strong>{{ currentBranch }}</strong>
+          <strong>{{ projectInfo.currentBranch || '(unknown)' }}</strong>
         </td>
       </tr>
 
-      <tr *ngIf="!!lastCommit">
+      <tr *ngIf="!!projectInfo.lastCommit">
         <td class="property-header">Last commit:</td>
         <td>
           <strong>
-            {{ lastCommit.relativeDate }} ({{ lastCommit.date }}) <br />
+            {{ projectInfo.lastCommit.relativeDate }} ({{ projectInfo.lastCommit.date }}) <br />
           </strong>
-          {{ lastCommit.message }} <br />
-          {{ lastCommit.commiterName }} ({{ lastCommit.commiterEmail }})
+          {{ projectInfo.lastCommit.message }} <br />
+          {{ projectInfo.lastCommit.commiterName }} ({{ projectInfo.lastCommit.commiterEmail }})
         </td>
       </tr>
+
+      <tr *ngIf="!!projectInfo?.environment">
+          <td class="property-header">Environment:</td>
+          <td>
+            <strong>
+              {{ projectInfo.environment }}
+            </strong>
+          </td>
+        </tr>
     </table>
 
     <button type="button" mat-button (click)="onRefreshButtonClicked()">Refresh</button>

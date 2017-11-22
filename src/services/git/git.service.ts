@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { existsSync, readFileSync } from 'fs';  // TODO: async!
 import { join } from 'path';
-import simpleGit = require('simple-git/promise');
+import simpleGit = require('simple-git/promise');   // tslint:disable-line no-require-imports no-submodule-imports (This module does not support "import".)
 
 import { CommitInfo } from './git.types';
 import { BranchSummary, ListLogLine, ListLogSummary } from './simple-git.types';
@@ -20,7 +20,7 @@ export class GitService {
   }
 
   // TODO: Async https://raw.githubusercontent.com/jonschlinkert/git-branch/master/index.js
-  public getCurrentBranchName(folderPath: string): string | null {
+  public getCurrentBranchName(folderPath: string): string | undefined {
     const headFilePath: string = this._gitHeadpath(folderPath);
     if (!existsSync(headFilePath)) {
       throw new Error('.git/HEAD does not exist');
@@ -62,8 +62,9 @@ export class GitService {
     return join(folderPath, '.git/HEAD');
   }
 
-  private _parseBranches(str: string): string | null {
+  private _parseBranches(str: string): string | undefined {
     const match: RegExpExecArray | null = /ref: refs\/heads\/([^\n]+)/.exec(String(str));
-    return match && match[1];
+    const branchName: string | null = match && match[1];
+    return branchName || undefined;
   }
 }
