@@ -6,6 +6,14 @@ import { Environment } from './../../models/environment';
 
 @Injectable()
 export class EnvironmentService {
+  public getEnvironment(urlPostfix: string): Environment | undefined {
+    if (!urlPostfix) {
+      throw new Error('Please specify the URL postfix of the environment!');
+    }
+
+    return this.getEnvironments().find((e: Environment) => e.urlPostfix === urlPostfix);
+  }
+
   public getEnvironments(): Environment[] {
     return [
       { urlPostfix: 'dev', friendlyName: 'Local (-dev)' },

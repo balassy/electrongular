@@ -1,4 +1,6 @@
 import npmConf = require('npm-conf');  // tslint:disable-line no-require-imports (This module does not support "import".)
+import { Environment } from '../../../models/environment';
+import { EnvironmentService } from '../../environment/environment.service';
 import { ProjectInfo } from './../project.types';
 import { GenericInfoProvider } from './generic-info-provider';
 /*
@@ -11,7 +13,23 @@ export class ThundercatInfoProvider extends GenericInfoProvider {
     return npmConf().get('backendHost');
   }
 
-  private static _getCurrentEnvironment(): string | undefined {
+  public constructor(protected _folderPath: string,
+                     protected _envService: EnvironmentService) {
+    super(_folderPath, _envService);
+  }
+
+  public getBasicProperties(): ProjectInfo {
+    const props: ProjectInfo | undefined = this._getBasicProperties();
+
+    props.color = 'accent';
+    props.environment = this._getCurrentEnvironment();
+    props.icon = 'settings';
+    props.name = 'Thundercat (Web Admin)';
+    props.version = '';
+    return props;
+  }
+
+  private _getCurrentEnvironment(): Environment | undefined {
     const backendHost: string | undefined = ThundercatInfoProvider._getBackendHost();
 
     if (!backendHost) {
@@ -20,22 +38,10 @@ export class ThundercatInfoProvider extends GenericInfoProvider {
 
     const regex: RegExp = /(.*)-backend-(.*)\.bold360\.io/g;
     const matches: RegExpExecArray | null = regex.exec(backendHost);
-    return matches ? matches[2] : undefined;  // tslint:disable-line no-magic-numbers (Closely tied to the regexp.)
-  }
+    const urlPostfix: string | undefined = matches ? matches[2] : undefined;  // tslint:disable-line no-magic-numbers (Closely tied to the regexp.)
 
-  public constructor(_folderPath: string) {
-    super(_folderPath);
-  }
-
-  public getBasicProperties(): ProjectInfo {
-    const props: ProjectInfo | undefined = this._getBasicProperties();
-
-    props.color = 'accent';
-    props.environmentName = ThundercatInfoProvider._getCurrentEnvironment();
-    props.environment = `${ThundercatInfoProvider._getCurrentEnvironment()} (backend: ${ThundercatInfoProvider._getBackendHost()})`;
-    props.icon = 'settings';
-    props.name = 'Thundercat (Web Admin)';
-    props.version = '';
-    return props;
+    return urlPostfix
+      ? this._envService.getEnvironment(urlPostfix)
+      : undefined;
   }
 }

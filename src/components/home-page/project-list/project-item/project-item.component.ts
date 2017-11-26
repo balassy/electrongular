@@ -8,6 +8,7 @@ import { DialogParams, DialogResult } from './switch-branch-dialog/switch-branch
 import { EnvironmentSelectorDialogComponent } from './../../../shared/environment-selector-dialog/environment-selector-dialog.component';
 import { EnvironmentSelectorDialogParams, EnvironmentSelectorDialogResult } from './../../../shared/environment-selector-dialog/environment-selector-dialog.types';
 
+import { Environment } from '../../../../models/environment';
 import { GitService } from '../../../../services/git/git.service';
 import { CommitInfo } from '../../../../services/git/git.types';
 import { ProjectService } from '../../../../services/project/project.service';
@@ -26,9 +27,8 @@ export class ProjectItemComponent implements OnInit {
   public projectInfo: {
     color?: string;
     currentBranch?: string;
-    currentEnvName?: string;
     description?: string;
-    environment?: string;
+    environment?: Environment;
     icon?: string;
     lastCommit?: CommitInfo;
     title?: string;
@@ -86,10 +86,12 @@ export class ProjectItemComponent implements OnInit {
   }
 
   public async onSwitchEnvironmentButtonClicked(): Promise<void> {
+    const initialEnvUrlPostfix: string | undefined = this.projectInfo.environment ? this.projectInfo.environment.urlPostfix : undefined;
+
     const dialogRef: MatDialogRef<EnvironmentSelectorDialogComponent> = this._dialog.open(EnvironmentSelectorDialogComponent, {
       width: '500px',
       data: <EnvironmentSelectorDialogParams> {
-        initialEnvironmentUrlPostfix: this.projectInfo.currentEnvName,
+        initialEnvironmentUrlPostfix: initialEnvUrlPostfix
       }
     });
 
@@ -99,7 +101,7 @@ export class ProjectItemComponent implements OnInit {
           throw new Error('Please select an environment to switch to!');
         }
 
-        if (result.selectedEnvironment.urlPostfix !== this.projectInfo.currentEnvName) {
+        if (result.selectedEnvironment.urlPostfix !== initialEnvUrlPostfix) {
           console.log('Switching to', result.selectedEnvironment);
 
           await this._loadProject();

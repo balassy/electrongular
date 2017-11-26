@@ -1,3 +1,5 @@
+import { Environment } from '../../models/environment';
+
 export interface PackageJson {
   description: string;
   name: string;
@@ -8,8 +10,7 @@ export interface PackageJson {
 export interface ProjectInfo {
   color?: string;
   description: string;
-  environment?: string;
-  environmentName?: string;
+  environment?: Environment;
   icon?: string;
   name?: string;
   version?: string;

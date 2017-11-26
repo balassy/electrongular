@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { shell } from 'electron';
 import { basename } from 'path';
+import { EnvironmentService } from '../environment/environment.service';
 import { GenericInfoProvider } from './providers/generic-info-provider';
 import { MaverickInfoProvider } from './providers/maverick-info-provider';
 import { ThundercatInfoProvider } from './providers/thundercat-info-provider';
@@ -9,14 +10,17 @@ import { ThundercatInfoProvider } from './providers/thundercat-info-provider';
 
 @Injectable()
 export class ProjectService {
+  public constructor(private _envService: EnvironmentService) {
+  }
+
   public getInfoProvider(path: string): GenericInfoProvider {
     switch (basename(path)) {
       case 'maverick':
-        return new MaverickInfoProvider(path);
+        return new MaverickInfoProvider(path, this._envService);
       case 'thundercat':
-        return new ThundercatInfoProvider(path);
+        return new ThundercatInfoProvider(path, this._envService);
       default:
-        return new GenericInfoProvider(path);
+        return new GenericInfoProvider(path, this._envService);
     }
   }
 

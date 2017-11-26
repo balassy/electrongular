@@ -1,12 +1,18 @@
 import { existsSync } from 'fs';  // TODO: async!
 import { basename, join } from 'path';
+import { EnvironmentService } from '../../environment/environment.service';
 import { PackageJson, ProjectInfo } from './../project.types';
 import { PropertyInfo } from './provider.types';
 
 export class GenericInfoProvider {
-  public constructor(protected _folderPath: string) {
+  public constructor(protected _folderPath: string,
+                     protected _envService: EnvironmentService) {
     if (!_folderPath) {
       throw new Error('Please specify the folderPath for the GenericInfoProvider!');
+    }
+
+    if (!_envService) {
+      throw new Error('Please specify the envService for the GenericInfoProvider!');
     }
   }
 
