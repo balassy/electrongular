@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Switch environment</h1>
+
+<div mat-dialog-content>
+  <p>
+    Select the environment to switch to:
+  </p>
+  <mat-form-field class="form-field">
+    <mat-select [(value)]="selectedEnv">
+      <mat-option *ngFor="let env of envs" [value]="env">
+        <div *ngIf="env === currentEnv; then currentEnv else otherEnv"></div>
+
+        <ng-template #currentEnv>
+          <strong>{{ env.friendlyName }} (current)</strong>
+        </ng-template>
+
+        <ng-template #otherEnv>
+          {{ env.friendlyName }}
+        </ng-template>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onSwitchButtonClicked()" [disabled]="selectedEnv === currentEnv">Switch</button>
+  <button mat-button [mat-dialog-close]>Cancel</button>
+</div>

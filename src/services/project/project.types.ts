@@ -9,6 +9,7 @@ export interface ProjectInfo {
   color?: string;
   description: string;
   environment?: string;
+  environmentName?: string;
   icon?: string;
   name?: string;
   version?: string;

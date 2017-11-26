@@ -18,7 +18,7 @@ export class MaverickInfoProvider extends GenericInfoProvider {
     const props: ProjectInfo | undefined = this._getBasicProperties();
 
     props.color = 'accent';
-    props.environment = this._getCurrentEnvironment();
+    props.environment = props.environmentName = this._getCurrentEnvironment();
     props.icon = 'dashboard';
     props.name = 'Maverick (Web Workspace)';
     props.version = '';

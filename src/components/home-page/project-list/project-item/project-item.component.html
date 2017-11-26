@@ -42,5 +42,6 @@
     <button type="button" mat-button (click)="onRefreshButtonClicked()">Refresh</button>
     <button type="button" mat-button (click)="onGetLatestButtonClicked()">Get latest</button>
     <button type="button" mat-button (click)="onSwitchBranchButtonClicked()">Switch branch...</button>
+    <button type="button" mat-button (click)="onSwitchEnvironmentButtonClicked()" *ngIf="!!projectInfo?.environment">Switch environment...</button>
   </mat-card-content>
 </mat-card>

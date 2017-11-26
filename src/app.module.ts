@@ -13,8 +13,10 @@ import { SwitchBranchDialog } from './components/home-page/project-list/project-
 import { ProjectListComponent } from './components/home-page/project-list/project-list.component';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 
+import { EnvironmentSelectorDialogComponent } from './components/shared/environment-selector-dialog/environment-selector-dialog.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 
+import { EnvironmentService } from './services/environment/environment.service';
 import { FolderService } from './services/folder/folder.service';
 import { GitService } from './services/git/git.service';
 import { ProjectService } from './services/project/project.service';
@@ -25,6 +27,7 @@ import { WindowService } from './services/window/window.service';
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
+    EnvironmentSelectorDialogComponent,
     HomePageComponent,
     NavbarComponent,
     ProjectItemComponent,
@@ -40,6 +43,7 @@ import { WindowService } from './services/window/window.service';
     FormsModule
   ],
   providers: [
+    EnvironmentService,
     FolderService,
     GitService,
     ProjectService,
@@ -47,6 +51,7 @@ import { WindowService } from './services/window/window.service';
     WindowService
   ],
   entryComponents: [
+    EnvironmentSelectorDialogComponent,
     SwitchBranchDialog
   ]
 })

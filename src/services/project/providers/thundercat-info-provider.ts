@@ -31,6 +31,7 @@ export class ThundercatInfoProvider extends GenericInfoProvider {
     const props: ProjectInfo | undefined = this._getBasicProperties();
 
     props.color = 'accent';
+    props.environmentName = ThundercatInfoProvider._getCurrentEnvironment();
     props.environment = `${ThundercatInfoProvider._getCurrentEnvironment()} (backend: ${ThundercatInfoProvider._getBackendHost()})`;
     props.icon = 'settings';
     props.name = 'Thundercat (Web Admin)';

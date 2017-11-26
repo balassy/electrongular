@@ -5,6 +5,9 @@ import { basename } from 'path';
 import { SwitchBranchDialog } from './switch-branch-dialog/switch-branch-dialog.component';
 import { DialogParams, DialogResult } from './switch-branch-dialog/switch-branch-dialog.types';
 
+import { EnvironmentSelectorDialogComponent } from './../../../shared/environment-selector-dialog/environment-selector-dialog.component';
+import { EnvironmentSelectorDialogParams, EnvironmentSelectorDialogResult } from './../../../shared/environment-selector-dialog/environment-selector-dialog.types';
+
 import { GitService } from '../../../../services/git/git.service';
 import { CommitInfo } from '../../../../services/git/git.types';
 import { ProjectService } from '../../../../services/project/project.service';
@@ -23,6 +26,7 @@ export class ProjectItemComponent implements OnInit {
   public projectInfo: {
     color?: string;
     currentBranch?: string;
+    currentEnvName?: string;
     description?: string;
     environment?: string;
     icon?: string;
@@ -58,7 +62,6 @@ export class ProjectItemComponent implements OnInit {
     const remoteBranchNames: string[] = await this._gitService.getRemoteBranches(this.path);
 
     const dialogRef: MatDialogRef<SwitchBranchDialog> = this._dialog.open(SwitchBranchDialog, {
-      width: '500px',
       data: <DialogParams> {
         currentBranchName: this.projectInfo.currentBranch,
         remoteBranchNames
@@ -82,6 +85,29 @@ export class ProjectItemComponent implements OnInit {
     });
   }
 
+  public async onSwitchEnvironmentButtonClicked(): Promise<void> {
+    const dialogRef: MatDialogRef<EnvironmentSelectorDialogComponent> = this._dialog.open(EnvironmentSelectorDialogComponent, {
+      width: '500px',
+      data: <EnvironmentSelectorDialogParams> {
+        initialEnvironmentUrlPostfix: this.projectInfo.currentEnvName,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(async (result: EnvironmentSelectorDialogResult) => {
+      if (result) {
+        if (!result.selectedEnvironment) {
+          throw new Error('Please select an environment to switch to!');
+        }
+
+        if (result.selectedEnvironment.urlPostfix !== this.projectInfo.currentEnvName) {
+          console.log('Switching to', result.selectedEnvironment);
+
+          await this._loadProject();
+        }
+      }
+    });
+  }
+
   private async _getLastCommit(): Promise<void> {
     const lastCommit: CommitInfo | undefined = await this._gitService.getLastCommit(this.path);
     if (!!lastCommit) {
@@ -101,6 +127,7 @@ export class ProjectItemComponent implements OnInit {
     if (projectInfo) {
       this.projectInfo = {
         color: projectInfo.color,
+        currentEnvName: projectInfo.environmentName,
         description: projectInfo.description,
         environment: projectInfo.environment,
         icon: projectInfo.icon,
