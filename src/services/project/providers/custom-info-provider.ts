@@ -1,6 +1,6 @@
 import { InfoProvider } from './info-provider';
 
-export class GenericInfoProvider extends InfoProvider {
+export class CustomInfoProvider extends InfoProvider {
   public constructor(protected _folderPath: string) {
     super(_folderPath);
   }

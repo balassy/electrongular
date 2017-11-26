@@ -2,20 +2,20 @@ import npmConf = require('npm-conf');  // tslint:disable-line no-require-imports
 import { Environment } from '../../../models/environment';
 import { EnvironmentService } from '../../environment/environment.service';
 import { ProjectInfo } from './../project.types';
-import { GenericInfoProvider } from './generic-info-provider';
-/*
-interface NpmConf {
-  get(key: string): string | undefined;
-} */
+import { CustomInfoProvider } from './custom-info-provider';
 
-export class ThundercatInfoProvider extends GenericInfoProvider {
+export class ThundercatInfoProvider extends CustomInfoProvider {
   private static _getBackendHost(): string | undefined {
     return npmConf().get('backendHost');
   }
 
   public constructor(protected _folderPath: string,
                      protected _envService: EnvironmentService) {
-    super(_folderPath, _envService);
+    super(_folderPath);
+
+    if (!_envService) {
+      throw new Error('Please specify the envService for the ThundercatInfoProvider!');
+    }
   }
 
   public getBasicProperties(): ProjectInfo {

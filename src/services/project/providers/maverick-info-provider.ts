@@ -3,7 +3,7 @@ import { join } from 'path';
 import { Environment } from '../../../models/environment';
 import { EnvironmentService } from '../../environment/environment.service';
 import { ProjectInfo } from './../project.types';
-import { GenericInfoProvider } from './generic-info-provider';
+import { CustomInfoProvider } from './custom-info-provider';
 
 interface Config {
   default: {
@@ -11,10 +11,14 @@ interface Config {
   };
 }
 
-export class MaverickInfoProvider extends GenericInfoProvider {
+export class MaverickInfoProvider extends CustomInfoProvider {
   public constructor(protected _folderPath: string,
                      protected _envService: EnvironmentService) {
-    super(_folderPath, _envService);
+    super(_folderPath);
+
+    if (!_envService) {
+      throw new Error('Please specify the envService for the MaverickInfoProvider!');
+    }
   }
 
   public getBasicProperties(): ProjectInfo {
