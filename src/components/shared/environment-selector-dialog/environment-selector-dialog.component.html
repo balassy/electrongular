@@ -7,13 +7,13 @@
   <mat-form-field class="form-field">
     <mat-select [(value)]="selectedEnv">
       <mat-option *ngFor="let env of envs" [value]="env">
-        <div *ngIf="env === currentEnv; then currentEnv else otherEnv"></div>
+        <div *ngIf="env.urlPostfix === currentEnv.urlPostfix; then currentEnvTmpl else otherEnvTmpl"></div>
 
-        <ng-template #currentEnv>
+        <ng-template #currentEnvTmpl>
           <strong>{{ env.friendlyName }} (current)</strong>
         </ng-template>
 
-        <ng-template #otherEnv>
+        <ng-template #otherEnvTmpl>
           {{ env.friendlyName }}
         </ng-template>
       </mat-option>
