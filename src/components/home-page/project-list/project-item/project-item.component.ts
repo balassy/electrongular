@@ -13,7 +13,7 @@ import { GitService } from '../../../../services/git/git.service';
 import { CommitInfo } from '../../../../services/git/git.types';
 import { ProjectService } from '../../../../services/project/project.service';
 import { ProjectInfo } from '../../../../services/project/project.types';
-import { GenericInfoProvider } from '../../../../services/project/providers/generic-info-provider';
+import { InfoProvider } from '../../../../services/project/providers/info-provider';
 
 @Component({
   selector: 'app-project-item',
@@ -122,14 +122,13 @@ export class ProjectItemComponent implements OnInit {
       throw new Error('Please specify the path for the project item!');
     }
 
-    const infoProvider: GenericInfoProvider = this._projectService.getInfoProvider(this.path);
+    const infoProvider: InfoProvider = this._projectService.getInfoProvider(this.path);
 
     const projectInfo: ProjectInfo | undefined = infoProvider.getBasicProperties();
 
     if (projectInfo) {
       this.projectInfo = {
         color: projectInfo.color,
-        currentEnvName: projectInfo.environmentName,
         description: projectInfo.description,
         environment: projectInfo.environment,
         icon: projectInfo.icon,
