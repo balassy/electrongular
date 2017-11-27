@@ -11,6 +11,7 @@ import { EnvironmentSelectorDialogParams, EnvironmentSelectorDialogResult } from
 import { Environment } from '../../../../models/environment';
 import { GitService } from '../../../../services/git/git.service';
 import { CommitInfo } from '../../../../services/git/git.types';
+import { ProgressService } from '../../../../services/progress/progress.service';
 import { ProjectService } from '../../../../services/project/project.service';
 import { ProjectInfo } from '../../../../services/project/project.types';
 import { InfoProvider } from '../../../../services/project/providers/info-provider';
@@ -37,7 +38,8 @@ export class ProjectItemComponent implements OnInit {
 
   public constructor(private _dialog: MatDialog,
                      private _projectService: ProjectService,
-                     private _gitService: GitService) {
+                     private _gitService: GitService,
+                     private _progressService: ProgressService) {
   }
 
   public async ngOnInit(): Promise<void> {
@@ -122,6 +124,8 @@ export class ProjectItemComponent implements OnInit {
       throw new Error('Please specify the path for the project item!');
     }
 
+    this._progressService.start('Loading the project...');
+
     const infoProvider: InfoProvider = this._projectService.getInfoProvider(this.path);
 
     const projectInfo: ProjectInfo | undefined = infoProvider.getBasicProperties();
@@ -147,5 +151,7 @@ export class ProjectItemComponent implements OnInit {
     this.projectInfo.currentBranch = this._gitService.getCurrentBranchName(this.path);
 
     await this._getLastCommit();
+
+    this._progressService.end();
   }
 }

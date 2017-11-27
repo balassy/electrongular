@@ -15,10 +15,12 @@ import { SettingsPageComponent } from './components/settings-page/settings-page.
 
 import { EnvironmentSelectorDialogComponent } from './components/shared/environment-selector-dialog/environment-selector-dialog.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { ProgressIndicatorComponent } from './components/shared/progress-indicator/progress-indicator.component';
 
 import { EnvironmentService } from './services/environment/environment.service';
 import { FolderService } from './services/folder/folder.service';
 import { GitService } from './services/git/git.service';
+import { ProgressService } from './services/progress/progress.service';
 import { ProjectService } from './services/project/project.service';
 import { SettingsService } from './services/settings/settings.service';
 import { WindowService } from './services/window/window.service';
@@ -30,6 +32,7 @@ import { WindowService } from './services/window/window.service';
     EnvironmentSelectorDialogComponent,
     HomePageComponent,
     NavbarComponent,
+    ProgressIndicatorComponent,
     ProjectItemComponent,
     ProjectListComponent,
     SettingsPageComponent,
@@ -46,6 +49,7 @@ import { WindowService } from './services/window/window.service';
     EnvironmentService,
     FolderService,
     GitService,
+    ProgressService,
     ProjectService,
     SettingsService,
     WindowService
