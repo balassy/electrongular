@@ -25,6 +25,11 @@ export class ProjectService {
     }
   }
 
+  public isCustom(subfolderName: string): boolean {
+    const lowerCaseSubfolderName: string = subfolderName.toLowerCase();
+    return lowerCaseSubfolderName === 'maverick' || lowerCaseSubfolderName === 'thundercat';
+  }
+
   public openProjectFolder(path: string): void {
     if (!path) {
       throw new Error('Please specify the project path to open!');
