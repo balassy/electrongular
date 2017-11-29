@@ -22,6 +22,6 @@ export class ProjectListComponent implements OnInit {
     const appSettings: AppSettings = this._settingsService.load();
     const projectPaths: ProjectPath[] = this._folderService.getSubfolders(appSettings.projectsFolderPath);
     this.projectPaths = projectPaths
-      .filter((projectPath: ProjectPath) => this._projectService.isCustom(projectPath.subfolderName));
+      .filter((projectPath: ProjectPath) => !appSettings.showOnlyCustomProjects || this._projectService.isCustom(projectPath.subfolderName));
   }
 }

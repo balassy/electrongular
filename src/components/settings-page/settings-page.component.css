@@ -10,3 +10,7 @@
 .projects-folder-path-field {
   width: calc(100% - 130px);
 }
+
+.action-bar {
+  margin-top: 30px;
+}

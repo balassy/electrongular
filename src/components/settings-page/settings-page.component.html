@@ -9,6 +9,10 @@
   </div>
 
   <div>
+    <mat-checkbox name="showOnlyCustomProjects" [(ngModel)]="appSettings.showOnlyCustomProjects">Show only special projects</mat-checkbox>
+  </div>
+
+  <div class="action-bar">
     <button type="submit" mat-raised-button color="primary"
             matTooltip="Saving to {{ settingsPath }}"
             matTooltipPosition="right">Save</button>
