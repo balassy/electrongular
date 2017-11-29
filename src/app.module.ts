@@ -8,8 +8,10 @@ import { AppThemeModule } from './app-theme.module';
 
 import { AppComponent } from './components/app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { MaverickProjectItemDetailsComponent } from './components/home-page/project-list/project-item/maverick-project-item-details/maverick-project-item-details.component';
 import { ProjectItemComponent } from './components/home-page/project-list/project-item/project-item.component';
 import { SwitchBranchDialog } from './components/home-page/project-list/project-item/switch-branch-dialog/switch-branch-dialog.component';
+import { ThundercatProjectItemDetailsComponent } from './components/home-page/project-list/project-item/thundercat-project-item-details/thundercat-project-item-details.component';
 import { ProjectListComponent } from './components/home-page/project-list/project-list.component';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 
@@ -31,12 +33,14 @@ import { WindowService } from './services/window/window.service';
     AppComponent,
     EnvironmentSelectorDialogComponent,
     HomePageComponent,
+    MaverickProjectItemDetailsComponent,
     NavbarComponent,
     ProgressIndicatorComponent,
     ProjectItemComponent,
     ProjectListComponent,
     SettingsPageComponent,
-    SwitchBranchDialog
+    SwitchBranchDialog,
+    ThundercatProjectItemDetailsComponent
   ],
   imports: [
     AppRoutingModule,

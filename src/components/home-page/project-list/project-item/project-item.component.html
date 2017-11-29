@@ -39,6 +39,14 @@
         </tr>
     </table>
 
+    <div *ngIf="projectPath.subfolderName === 'maverick'" class="details">
+      <app-maverick-project-item-details></app-maverick-project-item-details>
+    </div>
+
+    <div *ngIf="projectPath.subfolderName === 'thundercat'" class="details">
+      <app-thundercat-project-item-details></app-thundercat-project-item-details>
+    </div>
+
     <button type="button" mat-button (click)="onRefreshButtonClicked()">Refresh</button>
     <button type="button" mat-button (click)="onGetLatestButtonClicked()">Get latest</button>
     <button type="button" mat-button (click)="onSwitchBranchButtonClicked()">Switch branch...</button>

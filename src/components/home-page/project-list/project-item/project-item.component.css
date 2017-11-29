@@ -19,3 +19,8 @@
   vertical-align: top;
   white-space: nowrap;
 }
+
+.details {
+  margin-left: 3px;
+  margin-top: 3px;
+}
