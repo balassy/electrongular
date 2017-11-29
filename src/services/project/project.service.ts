@@ -25,9 +25,9 @@ export class ProjectService {
     }
   }
 
-  public isCustom(subfolderName: string): boolean {
-    const lowerCaseSubfolderName: string = subfolderName.toLowerCase();
-    return lowerCaseSubfolderName === 'maverick' || lowerCaseSubfolderName === 'thundercat';
+  public isCustom(projectName: string): boolean {
+    const lowerCaseProjectName: string = projectName.toLowerCase();
+    return lowerCaseProjectName === 'maverick' || lowerCaseProjectName === 'thundercat';
   }
 
   public openProjectFolder(path: string): void {
