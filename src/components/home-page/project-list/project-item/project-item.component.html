@@ -1,7 +1,7 @@
 <mat-card class="project-item">
   <mat-card-header>
     <div mat-card-avatar class="header-image">
-      <button mat-mini-fab color="{{ projectInfo.color || 'primary' }}" matTooltip="{{ path }}" matTooltipPosition="right" (click)="onFolderIconClicked()">
+      <button mat-mini-fab color="{{ projectInfo.color || 'primary' }}" matTooltip="{{ projectPath.fullPath }}" matTooltipPosition="right" (click)="onFolderIconClicked()">
         <mat-icon>{{ projectInfo.icon || 'folder' }}</mat-icon>
       </button>
     </div>

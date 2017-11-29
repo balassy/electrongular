@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { existsSync, lstatSync, readdirSync } from 'fs';  // TODO: async!
 import { join } from 'path';
-import { ProjectPath } from './folder.types';
+import { ProjectPath } from './../../models/folder';
 
 // tslint:disable prefer-function-over-method (Instantiated by DI.)
 
